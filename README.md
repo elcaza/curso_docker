@@ -1,6 +1,35 @@
 # Curso Docker
 Un conjunto de notas sobre Docker
 
+# Teoría
+## ¿Qué es un contenedor?
++ Los contenedores comparten el kernel del host
++ Los contenedores usan la capacidad del kernel para agrupar procesos para el control de recursos
+Containers use the kernel ability to group processes for resource control
++ Los contenedores garantizan aislamento a través de namespaces
++ Los contendores se sienten ligeros como una VM ligera, pero no son VM
+
+## Docker provee
++ Image management
++ Resource Isolation
++ File System Isolation
++ Network Isolation
++ Change Management
++ Sharing
++ Process Management
++ Service Discovery (DNS since 1.10)
+
+## Kernel Namespaces
++ Process trees (PID Namespace)
++ Mounts (MNT namespace) wc -l /proc/mounts
++ Network (Net namespace) ip addr
++ Users / UIDs (User Namespace)
++ Hostnames (UTS Namespace) hostname
++ Inter Process Communication (IPC Namespace) ipcs
+
+## Más información
++ https://docker-saigon.github.io/post/Docker-Internals/#how:cb6baf67dddd3a71c07abfd705dc7d4b
+
 # Instalación de docker
 
 Desde su sitio web oficial seguimos la guía de instalación
@@ -30,7 +59,6 @@ docker pull hello-world
 docker run hello-world
 ~~~
 
-
 # Conceptos importantes
 
 ## Imágenes
@@ -58,7 +86,7 @@ docker run hello-world
 
 ~~~
 
-## Tipos de contendores
+## Ejecución de contenedores en 1er y 2do plano
 
 ### Primer plano
 + Salen por salida estándar
@@ -319,4 +347,22 @@ RUN apt-get update && apt-get install -y \
 docker build -t user/image:1.0 . --no-cache=true
 ~~~
 
+# Enlaces entre contenedores
+Es utilizado para crear microservicios
+Docker crea un túnel seguro entre contenedores para que estos no expongan puertos externamente
+~~~bash
+# Se crea un contenedor especificando un nombre
+docker run -d --name redis redis:3.2.0
+# Comprobar que esté corriendo bajo el nombre correcto
+docker ps
+# Construye la app en que se encuentre la app
+docker build -t dockerapp:1.0 .
+# Ejecuta el contenedor
+docker run -d -p 5000:5000 --link nombre_contenedor dockerapp:2.0
+~~~
 
+## ¿Por qué funciona esto?
+~~~bash
+cat /etc/hosts
+# IP id_contendor nombre_contenedor
+~~~
