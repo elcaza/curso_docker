@@ -365,3 +365,86 @@ docker run -d -p 5000:5000 --link nombre_contenedor dockerapp:2.0
 cat /etc/hosts
 # IP id_contendor nombre_contenedor
 ~~~
+
+# Redes en Docker
+
+## Inspeccionar tipo de redes
+~~~bash
+docker network ls
+# 0b38e00cff30   bridge    bridge    local
+# 713b2164fa61   host      host      local
+# f0a5ab3ecf2a   none      null      local
+~~~
+
+## Inspeccionar red
+~~~bash
+docker network inspect bridge
+~~~
+
+## Red none
+~~~bash
+docker run -d --net none ubuntu sleep 60
+~~~
+
+## Red Bridge
+Parecido a red NAT
+~~~bash
+docker run -d --name nombre ubuntu sleep 60
+~~~
++ se omite el `--net` porque se asigna esta red por defecto
+
+## Crear/Borrar tu propia red
+~~~bash
+# Creamos la red
+docker network create --driver bridge mi_nueva_bridge
+# Inspeccionamos las redes
+docker network ls
+# Inspeccionamos la que queremos
+docker network inpect mi_nueva_bridge
+# Asociación
+docker run -d --net mi_nueva_bridge ubuntu sleep 60
+~~~
+
+## Gestión de redes
+### Añadir una nueva red a un contenedor existente
+~~~bash
+# Conectar a red existente
+docker network connect bridge contenedor_nombre
+# Desconectar
+docker network disconnect bridge contenedor_nombre
+# Corroborar (ping o ifconfig)
+docker exec -it contenedor_nombre ifconfig
+~~~
+
+## Red Host 
+Parecida a bridge de vmware
++ En teoría no es necesario, porque para eso existe la opción -p (?)
++ No está aislado
+
+~~~bash
+# Crear contenedor abierto
+docker run -d --name contenedor_abierto --net host busybox sleep 100
+~~~
+
+## Red Overlay  
+Soporta múltiples maquinas host
+Requiere condiciones preexistentes
++ Docker engine en modo Swarm
+
+# Almacenamiento de datos
+~~~bash
+# Crear un nuevo volumen
+docker volume create ejemplo
+# Eliminar volumen
+docker volume rm ejemplo
+
+# Ver volumenes creados
+docker volume ls
+
+# docker volume inspect ejemplo
+docker volume inspect ejemplo
+
+# Asignar un volumen a una imagen
+docker run -p 8000:8000 -v ejemplo:/app -d --name name user/imagen:1.0
+~~~
+
