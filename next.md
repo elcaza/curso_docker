@@ -1,10 +1,11 @@
 # Curso Docker
-Docker 101
+Un conjunto de notas sobre Docker
 
 # Teoría
-## ¿Qué hace un contenedor?
+## ¿Qué es un contenedor?
 + Los contenedores comparten el kernel del host
 + Los contenedores usan la capacidad del kernel para agrupar procesos para el control de recursos
+Containers use the kernel ability to group processes for resource control
 + Los contenedores garantizan aislamento a través de namespaces
 + Los contendores se sienten ligeros como una VM ligera, pero no son VM
 
