@@ -201,7 +201,6 @@ docker commit debian-git3 elcaza/debian-git3:1.0
 
 # Consultar imagen creada
 docker images
-
 ~~~
 
 ## Dockerfile
@@ -210,6 +209,114 @@ Muy parecido a un *Makefile*
 + Consultar sección de Dockerfile
 
 # Dockerfile
-Hay que recordar que las imágenes de Docker se componen por capas, cada instrucción genera una nueva capa
+Hay que recordar que las imágenes de Docker se componen por capas, cada instrucción genera una nueva capa.
+
+Dado lo anterior, en medida de lo posible es preferible concatenar comandos para evitar hacer lo siguiente:
+
+`Dockerfile` (Ejemplo a evitarse)
+~~~Dockerfile
+FROM debian
+RUN apt-get update
+RUN apt intall -y git
+RUN apt intall -y curl
+~~~
++ Cada ``RUN`` añade una nueva capa a la imagen
+
+`Dockerfile` (Ejemplo a utilizar en su lugar)
+~~~Dockerfile
+FROM debian
+RUN apt-get update && apt-get install -y \
+    curl \
+    git 
+~~~
++ Nota: Se hace uso de `apt-get` para evitar el *warning* que Docker envia con `apt`.
+
 ## Contenidos e instrucciones de un Dockerfile
+Aunque no hay diferencia entre minusculas y mayusculas, se recomienda el uso de mayusculas para las instrucciones.
+
+### FROM
++ Imágen base
+    + `FROM ubuntu`
+
+### RUN 
++ Acción a ejecutar
+    + `RUN apt-get update && apt-get install -y git`
+
+### CMD
++ Comando a ejecutar tras inicializar el contenedor
+    + `CMD ["echo", "Inicializado"]`
+
+### COPY
++ COPY copia archivos o directorios del contexto de compilación al sistema de archivos del contenedor
+    + `COPY files /app/files`
+
+### ADD
++ Puede manejar URLs remotas
++ Puede extraer automaticamente archivos tar
++ Se recomienda usar COPY
+    + `ADD <src> <dest>`
+
+### USER
++ USER elecciona con que usuario va a correr la aplicación
+    + `USER admin`
+
+### WORKDIR
++ Selecciona el directorio de trabajo que vamos a utilizar
+    + `WORKDIR /app`
+
+## Ejemplos de dockerfile
+~~~Dockerfile
+FROM python:3.7
+RUN pip install Flask==0.11.1
+RUN useradd -ms /bin/bash admin
+USER admin
+WORKDIR /app
+COPY app /app
+CMD ["python", "app.py"]
+~~~
++ useradd -ms
+    + -m, --create-home
+    + -s, --shell SHELL
+
+## Comandos básicos de Dockerfile
+### Compilar imagen
+~~~bash
+# Compilar imagen
+docker build -t user/image .
+docker build -t user/image /path/to/file
+
+# Compilar imagen sin cache
+docker build -t user/image:1.0 . --no-cache=true
+~~~
+
+## Docker cache
+El cache de Docker es usado para no ejecutar los comandos una vez que estos ya se han ejecutado.
+
+### Ejemplo
+Podria causar problemas en instrucciones como:
+~~~Dockerfile
+# Config inicial
+FROM debian
+RUN apt-get update
+RUN apt-get install -y git
+
+# Config nueva
+# cache
+FROM debian
+# cache
+RUN apt-get update
+# Estariamos instalando sin antes haber hecho un update, podría descargarse un paquete viejo
+RUN apt-get install -y curl git vim
+
+# Posible solución
+FROM debian
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim
+
+# Otra solucion
+docker build -t user/image:1.0 . --no-cache=true
+~~~
+
 
