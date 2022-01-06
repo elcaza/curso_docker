@@ -31,7 +31,7 @@ docker run hello-world
 ~~~
 
 
-# Conceptos importaes
+# Conceptos importantes
 
 ## Imágenes
 + Plantillas utilizadas para crear contenedores; comando _build_
@@ -161,12 +161,10 @@ docker logs id_image
     + username/image
 
 ~~~bash
-# Ver imagenes que tienes
-docker images
 # Obtenemos id
 docker ps -a
 
-# Cambiar tag
+# Cambiar tag // Solo en caso de ser requerido
 docker tag id_image username/image:1.0
 
 # Hacer commit de una imagen de docker
@@ -179,3 +177,39 @@ docker login --username=user
 # Enviar imagen a Dockerhub
 docker push username/image:1.0
 ~~~
+
+# Construcción de imágenes de Docker
+## Hacer commit de los cambios en el contenedor
+De esta manera 
+
+~~~bash
+# Iniciamos una imagen de debian
+docker run -it --name debian-git3 debian
+
+# Dentro del docker descargamos git
+apt update
+apt install -y git 
+git --version
+exit
+
+# Docker Commit
+# Obtenemos id
+docker ps -a
+
+# Hacer commit de una imagen de docker
+docker commit debian-git3 elcaza/debian-git3:1.0
+
+# Consultar imagen creada
+docker images
+
+~~~
+
+## Dockerfile
+A través de un documento `Dockerfile` es posible automatizar ciertas acciones.
+Muy parecido a un *Makefile*
++ Consultar sección de Dockerfile
+
+# Dockerfile
+Hay que recordar que las imágenes de Docker se componen por capas, cada instrucción genera una nueva capa
+## Contenidos e instrucciones de un Dockerfile
+
