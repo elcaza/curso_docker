@@ -107,23 +107,35 @@ Al igual que en github, docker tiene imagenes que puedes usar como base en:
 
 # Comandos básicos
 
-## Listar imagenes, descargar y correr
+## Listar imagenes y contenedores
 ~~~bash
-# Corroborar qué imagenes se tienen en nuestra computadora
+# Listar qué imagenes se tienen en nuestra computadora
 docker images
 
-# Descarga la imagen
+# Listar qué contenedores se tienen en nuestra computadora
+docker ps -a
+
+# Listar qué contenedores se están ejecutando actualmente
+docker ps
+~~~
+
+## Descargar y crear contenedores
+~~~bash
+# Descarga una imagen
 docker pull hello-world
 
-# Correr imagen
+# Crear un contenedor
 docker run hello-world
 
-# Ejecutar contenedor y borrar
+# Crear un contenedor y eliminarse tras ejecutarse
 docker run --rm ubuntu
 
-# Ejecutar un contenedor y añadir un nombre
+# Ejecutar un contenedor y asignar un nombre
 docker run --name hello_ubuntu ubuntu 
+~~~
 
+## Iniciar contenedores
+~~~bash
 # Abrir un contenedor que se ha cerrado
     # Obtenemos el ID
 docker ps -a
