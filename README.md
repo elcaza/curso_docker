@@ -192,11 +192,29 @@ docker ps
 docker exec -it id_docker /bin/bash
 ~~~
 
-## Detener contenedores y borrar
+## Detener contenedores
 ~~~bash
 # Detener un contenedor
 docker ps
 docker stop id_name_contenedor 
+~~~
+
+## Borrar contenedores
+Es necesario primero "detener" el contenedor
+~~~bash
+# Borrar contenedor
+docker ps -a
+docker rm <id_contenedor>
+
+# Borrar todos los contenedores
+docker rm $(docker ps -a -q)
+~~~
+
+## Borrar imagenes
+Es necesario eliminar los contenedores asociados a esta imagen
+~~~bash
+# Borrar imagenes
+sudo docker rmi <id_imagen>
 ~~~
 
 ## Entrar a un contenedor
