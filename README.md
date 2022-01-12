@@ -289,8 +289,8 @@ Dado lo anterior, en medida de lo posible es preferible concatenar comandos para
 ~~~Dockerfile
 FROM debian
 RUN apt-get update
-RUN apt intall -y git
-RUN apt intall -y curl
+RUN apt install -y git
+RUN apt install -y curl
 ~~~
 + Cada ``RUN`` añade una nueva capa a la imagen
 
