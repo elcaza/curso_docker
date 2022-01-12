@@ -42,8 +42,20 @@ docker --version
 ```
 + Si no se puede visualizar probar con `sudo docker --version`
 
-Pasos de post instalación
+## Pasos de post instalación
 + https://docs.docker.com/engine/install/linux-postinstall/
+
+### Agregar a un usuario al grupo docker
+~~~bash
+usermod -aG docker ${USUARIO}
+~~~
++ Requiere reiniciar la máquina o abrir y cerrar sesión para obtener los nuevos privilegios
+
+### Switch temporal
+~~~bash
+sudo su - ${USER}
+~~~
++ Realiza una nueva sesión de tu usuario vía sudo y te da un shell interactivo
 
 ## Hello word en docker
 
@@ -105,6 +117,9 @@ Al igual que en github, docker tiene imagenes que puedes usar como base en:
 ## Persistencia
 + docker run crea nuevos contenedores, no hay persistencia. Tal cual una instancia de una clase.
 
+## Buildkit Docker
++ https://docs.docker.com/develop/develop-images/build_enhancements/
+
 # Comandos básicos
 
 ## Listar imagenes y contenedores
@@ -117,6 +132,34 @@ docker ps -a
 
 # Listar qué contenedores se están ejecutando actualmente
 docker ps
+~~~
+
+## Ver contenedores que se están/han ejecutado
+
+~~~bash
+# Ver que contenedores se ejecutan en background
+docker ps
+# sudo docker run ubuntu sleep 3
+
+# Ver todos los que contenedores se han ejecutado
+docker ps -a
+~~~
+
+## Listar información de un contenedor
+
+~~~bash
+# Listar información a bajo nivel de una imagen
+sudo docker run -d ubuntu sleep 60
+sudo docker inspect id_image
+
+# Ver imagenes que conforman una capa de docker
+docker history ubuntu
+~~~
+
+## Revisar logs
+~~~bash
+# Checar logs de una imagen
+docker logs id_image
 ~~~
 
 ## Descargar y crear contenedores
@@ -163,34 +206,6 @@ docker run -it ubuntu
 
 # Entrar al contenedor y ejecutar un comando
 sudo docker run ubuntu echo "hello world!"
-~~~
-
-## Ver contenedores que se están/han ejecutado
-
-~~~bash
-# Ver que contenedores se ejecutan en background
-docker ps
-# sudo docker run ubuntu sleep 3
-
-# Ver todos los que contenedores se han ejecutado
-docker ps -a
-~~~
-
-## Listar información de un contenedor
-
-~~~bash
-# Listar información a bajo nivel de una imagen
-sudo docker run -d ubuntu sleep 60
-sudo docker inspect id_image
-
-# Ver imagenes que conforman una capa de docker
-docker history ubuntu
-~~~
-
-## Revisar logs
-~~~bash
-# Checar logs de una imagen
-docker logs id_image
 ~~~
 
 ## Commits & Login a Dockerhub
@@ -295,6 +310,10 @@ Aunque no hay diferencia entre minusculas y mayusculas, se recomienda el uso de 
 + Se recomienda usar COPY
     + `ADD <src> <dest>`
 
+### EXPOSE
++ Informa que el contenedor va a estar a la escucha en un puerto especifico
+    + `EXPOSE <port>`
+
 ### USER
 + USER elecciona con que usuario va a correr la aplicación
     + `USER admin`
@@ -317,8 +336,8 @@ CMD ["python", "app.py"]
     + -m, --create-home
     + -s, --shell SHELL
 
-## Comandos básicos de Dockerfile
-### Compilar imagen
+# Comandos básicos de Dockerfile
+## Compilar imagen
 ~~~bash
 # Compilar imagen
 docker build -t user/image .
