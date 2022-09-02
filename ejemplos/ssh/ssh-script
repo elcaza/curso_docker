@@ -1,0 +1,11 @@
+#!/bin/sh
+# Borrar logs apache2
+# rm -f /usr/local/apache2/logs/httpd.pid
+
+echo "iniciando SSH"
+
+# Iniciando apache
+# service ssh start
+# exec /usr/sbin/sshd -D
+# service ssh start
+exec "/usr/sbin/sshd" "-D"
