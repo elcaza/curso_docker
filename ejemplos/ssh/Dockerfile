@@ -5,8 +5,7 @@ FROM debian
 RUN apt-get update && apt-get install -y \
 openssh-server \
 systemctl \
-net-tools \
-sudo
+net-tools 
 
 # Creamos un nuevo usuario
 RUN useradd -ms /bin/bash sshuser
@@ -19,7 +18,6 @@ COPY public_key/key.pub /home/sshuser/.ssh/authorized_keys
 
 # Asignamos los privilegios necesarios
 RUN chmod 600 /home/sshuser/.ssh/authorized_keys && chown -R sshuser:sshuser /home/sshuser/
-
 
 # Corregimos el error "Missing privilege separation directory"
 RUN mkdir /var/run/sshd

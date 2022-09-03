@@ -13,14 +13,13 @@ Ejemplos:
 1. Apache 
 1. SSH
 1. Apache y SSH
-1. Flask
 
 ## Uso de imágenes construidas
 
 Ejemplos:
 1. Apache desde imagen
 1. Flask desde imagen
-1. Enlazar WordPress con MySQL
+1. NextCloud
 
 # Anexo
 
@@ -33,8 +32,6 @@ docker run <image>
 # Ejecutar un comando sobre una imagen que corre actualmente
 docker exec -it <container_id> /bin/bash
 # docker exec -it b1ef42b5257b bash
-
-
 
 # Volumenes
 
