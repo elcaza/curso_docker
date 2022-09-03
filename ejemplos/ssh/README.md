@@ -4,7 +4,7 @@ Ejemplo de construcción del contenedor SSH
 
 ## ¿Cómo construir el contenedor?
 ~~~bash
-docker build -t username/tag .
+docker build -t username/project .
 ~~~
 
 ## ¿Cómo correr el contenedor?
