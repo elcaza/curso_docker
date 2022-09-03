@@ -2,7 +2,7 @@
 # Borrar logs apache2
 # rm -f /usr/local/apache2/logs/httpd.pid
 
-echo "probando 2"
+echo "Iniciando SSH y Apache"
 # service apache2 start
 # exec apache2 -D FOREGROUND 
 service ssh start
