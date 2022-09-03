@@ -9,7 +9,7 @@ docker build -t username/project .
 
 ## ¿Cómo correr el contenedor?
 ~~~bash
-docker run -p 2222:22 <contenedor>
+docker run -p 2222:22 <imagen>
 ~~~
 
 ## ¿Cómo comprobar que funciona?
