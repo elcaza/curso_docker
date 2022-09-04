@@ -2,16 +2,30 @@
 
 # Comandos básicos
 
-## Listar imagenes y contenedores
 ~~~bash
 # Listar qué imagenes se tienen en nuestra computadora
 docker images
 
-# Listar qué contenedores se tienen en nuestra computadora
+# Listar qué contenedores se se han corrido en nuestra computadora
 docker ps -a
 
 # Listar qué contenedores se están ejecutando actualmente
 docker ps
+
+# Crear un nuevo contenedor
+docker run <imagen>
+
+# Ejecutar un comando dentro de un contenedor que ya está corriendo
+docker exec <imagen> <comando>
+
+# Ejecutar un comando en modo interactivo dentro de un contenedor que ya está corriendo
+docker exec -it <imagen> <comando>
+
+# Detener un contenedor
+docker stop <contenedor>
+
+# Iniciar un contenedor anteriormente creado (Vuelve a jalar la configuración con la que fue creado)
+docker start <contenedor>
 ~~~
 
 ## Ver contenedores que se están/han ejecutado
@@ -40,6 +54,9 @@ docker history ubuntu
 ~~~bash
 # Checar logs de una imagen
 docker logs id_image
+
+# Checar los logs de una una imagen y quedarse esperando
+docker logs -f id_image
 ~~~
 
 ## Descargar y crear contenedores

@@ -1,13 +1,13 @@
 # Ejemplos de Docker
 
-## Creación y despliegue con Dockerfile
-
 Requisitos:
 + Instalación
 + Uso de volumenes
 + Script de inicio
 + Bind de puertos
 + Dockerfile
+
+## Creación y despliegue con Dockerfile
 
 Ejemplos:
 1. Apache 

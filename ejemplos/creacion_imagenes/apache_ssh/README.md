@@ -10,6 +10,9 @@ docker build -t username/project .
 ## ¿Cómo correr el contenedor?
 ~~~bash
 docker run -p 8080:80 -p 2222:22 <imagen>
+
+# Uso de volumenes
+docker run -v /home/user/Downloads/folder/:/var/www/html/ -p 8080:80 -p 2222:22 <imagen>
 ~~~
 
 ## ¿Cómo comprobar que funciona?

@@ -4,12 +4,16 @@ Ejemplo de construcción de servicio Apache
 
 ## ¿Cómo construir el contenedor?
 ~~~bash
-docker build -t username/tag .
+docker build -t username/imagen .
 ~~~
 
 ## ¿Cómo correr el contenedor?
 ~~~bash
-docker run -p 8080:80 <contenedor>
+# Manera normal
+docker run -p 8080:80 <imagen>
+
+# Uso de volumenes
+docker run -v /home/user/Downloads/folder/:/var/www/html/ -p 8080:80 <imagen>
 ~~~
 
 ## ¿Cómo comprobar que funciona?
